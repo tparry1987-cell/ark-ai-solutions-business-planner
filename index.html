@@ -196,18 +196,20 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <!-- Critical -->
                         <div class="bg-ark-input rounded-xl p-4 text-center">
-                            <svg class="w-20 h-20 mx-auto transform -rotate-90" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
-                                <circle id="critical-ring" cx="50" cy="50" r="40"
-                                        stroke="#ef4444" stroke-width="8" fill="none"
-                                        stroke-linecap="round"
-                                        stroke-dasharray="251.33" stroke-dashoffset="251.33"
-                                        class="progress-ring__progress"/>
-                            </svg>
-                            <div class="-mt-14 relative z-10">
-                                <span id="critical-percent" class="text-xl font-bold text-ark-critical">0%</span>
+                            <div class="relative w-20 h-20 mx-auto">
+                                <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
+                                    <circle id="critical-ring" cx="50" cy="50" r="40"
+                                            stroke="#ef4444" stroke-width="8" fill="none"
+                                            stroke-linecap="round"
+                                            stroke-dasharray="251.33" stroke-dashoffset="251.33"
+                                            class="progress-ring__progress"/>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span id="critical-percent" class="text-lg font-bold text-ark-critical">0%</span>
+                                </div>
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-3">
                                 <span class="inline-block px-2 py-1 bg-ark-critical/20 text-ark-critical text-xs font-semibold rounded">CRITICAL</span>
                                 <p id="critical-count" class="text-gray-400 text-xs mt-1">0/13</p>
                             </div>
@@ -215,18 +217,20 @@
 
                         <!-- High -->
                         <div class="bg-ark-input rounded-xl p-4 text-center">
-                            <svg class="w-20 h-20 mx-auto transform -rotate-90" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
-                                <circle id="high-ring" cx="50" cy="50" r="40"
-                                        stroke="#f97316" stroke-width="8" fill="none"
-                                        stroke-linecap="round"
-                                        stroke-dasharray="251.33" stroke-dashoffset="251.33"
-                                        class="progress-ring__progress"/>
-                            </svg>
-                            <div class="-mt-14 relative z-10">
-                                <span id="high-percent" class="text-xl font-bold text-ark-high">0%</span>
+                            <div class="relative w-20 h-20 mx-auto">
+                                <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
+                                    <circle id="high-ring" cx="50" cy="50" r="40"
+                                            stroke="#f97316" stroke-width="8" fill="none"
+                                            stroke-linecap="round"
+                                            stroke-dasharray="251.33" stroke-dashoffset="251.33"
+                                            class="progress-ring__progress"/>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span id="high-percent" class="text-lg font-bold text-ark-high">0%</span>
+                                </div>
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-3">
                                 <span class="inline-block px-2 py-1 bg-ark-high/20 text-ark-high text-xs font-semibold rounded">HIGH</span>
                                 <p id="high-count" class="text-gray-400 text-xs mt-1">0/13</p>
                             </div>
@@ -234,18 +238,20 @@
 
                         <!-- Medium -->
                         <div class="bg-ark-input rounded-xl p-4 text-center">
-                            <svg class="w-20 h-20 mx-auto transform -rotate-90" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
-                                <circle id="medium-ring" cx="50" cy="50" r="40"
-                                        stroke="#eab308" stroke-width="8" fill="none"
-                                        stroke-linecap="round"
-                                        stroke-dasharray="251.33" stroke-dashoffset="251.33"
-                                        class="progress-ring__progress"/>
-                            </svg>
-                            <div class="-mt-14 relative z-10">
-                                <span id="medium-percent" class="text-xl font-bold text-ark-medium">0%</span>
+                            <div class="relative w-20 h-20 mx-auto">
+                                <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
+                                    <circle id="medium-ring" cx="50" cy="50" r="40"
+                                            stroke="#eab308" stroke-width="8" fill="none"
+                                            stroke-linecap="round"
+                                            stroke-dasharray="251.33" stroke-dashoffset="251.33"
+                                            class="progress-ring__progress"/>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span id="medium-percent" class="text-lg font-bold text-ark-medium">0%</span>
+                                </div>
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-3">
                                 <span class="inline-block px-2 py-1 bg-ark-medium/20 text-ark-medium text-xs font-semibold rounded">MEDIUM</span>
                                 <p id="medium-count" class="text-gray-400 text-xs mt-1">0/13</p>
                             </div>
@@ -253,18 +259,20 @@
 
                         <!-- Low -->
                         <div class="bg-ark-input rounded-xl p-4 text-center">
-                            <svg class="w-20 h-20 mx-auto transform -rotate-90" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
-                                <circle id="low-ring" cx="50" cy="50" r="40"
-                                        stroke="#39b54a" stroke-width="8" fill="none"
-                                        stroke-linecap="round"
-                                        stroke-dasharray="251.33" stroke-dashoffset="251.33"
-                                        class="progress-ring__progress"/>
-                            </svg>
-                            <div class="-mt-14 relative z-10">
-                                <span id="low-percent" class="text-xl font-bold text-ark-low">0%</span>
+                            <div class="relative w-20 h-20 mx-auto">
+                                <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
+                                    <circle id="low-ring" cx="50" cy="50" r="40"
+                                            stroke="#39b54a" stroke-width="8" fill="none"
+                                            stroke-linecap="round"
+                                            stroke-dasharray="251.33" stroke-dashoffset="251.33"
+                                            class="progress-ring__progress"/>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span id="low-percent" class="text-lg font-bold text-ark-low">0%</span>
+                                </div>
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-3">
                                 <span class="inline-block px-2 py-1 bg-ark-low/20 text-ark-low text-xs font-semibold rounded">LOW</span>
                                 <p id="low-count" class="text-gray-400 text-xs mt-1">0/13</p>
                             </div>

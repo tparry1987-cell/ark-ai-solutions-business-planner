@@ -92,6 +92,42 @@
             text-decoration: line-through;
         }
 
+        .item-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 16px;
+        }
+
+        .checkbox-wrapper.expanded .item-details {
+            max-height: 500px;
+            padding: 12px 16px 16px 16px;
+        }
+
+        .checkbox-wrapper .expand-icon {
+            transition: transform 0.2s ease;
+        }
+
+        .checkbox-wrapper.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .step-item::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background: #cc147f;
+            border-radius: 50%;
+        }
+
         .progress-bar-fill {
             transition: width 0.5s ease-out;
         }
@@ -330,29 +366,29 @@
                     {
                         name: "Sales Infrastructure",
                         items: [
-                            { id: "C01", text: "Cold call script written & practised" },
-                            { id: "C02", text: "Cold email templates (3 industry variations)" },
-                            { id: "C03", text: "LinkedIn connection request template" },
-                            { id: "C04", text: "Prospect list built (110+ contacts minimum)" },
-                            { id: "C05", text: "Offer statement locked (one sentence)" },
-                            { id: "C06", text: "Pricing locked in" },
-                            { id: "C07", text: "Objection responses mapped (top 5)" }
+                            { id: "C01", text: "Cold call script written & practised", notes: "Your #1 weapon - 15 years of experience here. Write a compelling opening, value proposition, and call-to-action. Practice until it feels natural.", steps: ["Write opening hook (10 seconds)", "Define your value proposition", "Prepare 3 qualifying questions", "Create soft close for booking demo", "Practice 20+ times out loud"] },
+                            { id: "C02", text: "Cold email templates (3 industry variations)", notes: "Create tailored templates for: Recruitment, Dental, Estate Agents. Each should speak to their specific pain points.", steps: ["Research pain points per industry", "Write subject line variations (A/B test)", "Create personalisation tokens", "Include clear CTA", "Keep under 150 words"] },
+                            { id: "C03", text: "LinkedIn connection request template", notes: "Personalised, not spammy. Reference something specific about them or their company.", steps: ["Research prospect before connecting", "Mention mutual connection or interest", "Keep under 300 characters", "No selling in first message", "Follow up after acceptance"] },
+                            { id: "C04", text: "Prospect list built (110+ contacts minimum)", notes: "Target: 50 recruitment agencies, 30 dental practices, 30 estate agents. Use LinkedIn Sales Navigator or Apollo.", steps: ["Define ideal customer profile", "Find 50 recruitment agency contacts", "Find 30 dental practice contacts", "Find 30 estate agent contacts", "Verify email addresses", "Add to CRM/spreadsheet"] },
+                            { id: "C05", text: "Offer statement locked (one sentence)", notes: "What you sell, to whom, what outcome. Example: 'We help recruitment agencies book 30% more candidate interviews using AI voice agents.'", steps: ["Define your target customer", "Identify the main problem you solve", "Quantify the outcome/benefit", "Write in one clear sentence", "Test with 5 people for clarity"] },
+                            { id: "C06", text: "Pricing locked in", notes: "Voice AI, Lead Reactivation, Chatbots, Automations. Have setup fees + monthly retainers defined.", steps: ["Research competitor pricing", "Calculate your costs + margin", "Define setup/implementation fee", "Set monthly retainer pricing", "Create pricing tiers if needed", "Prepare ROI justification"] },
+                            { id: "C07", text: "Objection responses mapped (top 5)", notes: "Common objections: Too expensive, Need to think about it, Already have a solution, Bad timing, Need to ask my partner.", steps: ["List top 5 objections you expect", "Write response for each", "Include proof points/stories", "Practice delivering naturally", "Prepare follow-up questions"] }
                         ]
                     },
                     {
                         name: "Technical Demos",
                         items: [
-                            { id: "C08", text: "ONE working voice AI demo" },
-                            { id: "C09", text: "Voice demo test phone number active" },
-                            { id: "C10", text: "ONE working chatbot demo" }
+                            { id: "C08", text: "ONE working voice AI demo", notes: "Template-based (Synthflow/VAPI/Retell) - appointment booking or receptionist use case.", steps: ["Choose platform (Retell recommended)", "Select use case (receptionist or booking)", "Configure voice and personality", "Set up call flow/script", "Test extensively", "Prepare talking points for demo"] },
+                            { id: "C09", text: "Voice demo test phone number active", notes: "Prospects can call it anytime to experience the AI. Get a professional number via Twilio.", steps: ["Set up Twilio account", "Purchase phone number", "Connect to voice AI platform", "Test inbound calls", "Add to website/email signature"] },
+                            { id: "C10", text: "ONE working chatbot demo", notes: "Lead capture or FAQ bot. Can use Botpress, Voiceflow, or similar.", steps: ["Choose platform", "Define bot purpose (lead capture/FAQ)", "Write conversation flows", "Design fallback responses", "Add lead capture form", "Test on mobile and desktop"] }
                         ]
                     },
                     {
                         name: "Business Infrastructure",
                         items: [
-                            { id: "C11", text: "Professional email working" },
-                            { id: "C12", text: "Calendar booking system live" },
-                            { id: "C13", text: "Service agreement/contract template" }
+                            { id: "C11", text: "Professional email working", notes: "you@arkaisolutions.com or similar. Use Google Workspace for reliability.", steps: ["Purchase domain if needed", "Set up Google Workspace ($6/mo)", "Configure email address", "Set up email signature", "Test send/receive"] },
+                            { id: "C12", text: "Calendar booking system live", notes: "Cal.com or Calendly. Allow prospects to book demos directly.", steps: ["Create Cal.com/Calendly account", "Set availability hours", "Create 'Discovery Call' event (30 min)", "Add buffer time between calls", "Connect to Google Calendar", "Get booking link"] },
+                            { id: "C13", text: "Service agreement/contract template", notes: "Scope, pricing, timelines, terms. Protect yourself and set clear expectations.", steps: ["Define scope of services", "Add pricing and payment terms", "Include timeline/deliverables", "Add cancellation policy", "Include liability limitations", "Have lawyer review (optional)"] }
                         ]
                     }
                 ]
@@ -367,29 +403,29 @@
                     {
                         name: "Sales Materials",
                         items: [
-                            { id: "H01", text: "Demo video - Voice AI (Loom, <3 mins)" },
-                            { id: "H02", text: "Demo video - Chatbot (Loom, <2 mins)" },
-                            { id: "H03", text: "Service one-pager PDF" },
-                            { id: "H04", text: "Proposal template ready" },
-                            { id: "H05", text: "Follow-up email sequences written" }
+                            { id: "H01", text: "Demo video - Voice AI (Loom, <3 mins)", notes: "Conversational, benefit-focused, not technical. Show the AI in action handling a real scenario.", steps: ["Plan the demo scenario", "Record screen + webcam with Loom", "Start with the problem", "Show AI solving it live", "End with clear CTA", "Keep under 3 minutes"] },
+                            { id: "H02", text: "Demo video - Chatbot (Loom, <2 mins)", notes: "Show it solving a real problem - lead capture or answering FAQs.", steps: ["Choose compelling use case", "Record interaction with chatbot", "Highlight key features", "Show lead capture in action", "Keep under 2 minutes"] },
+                            { id: "H03", text: "Service one-pager PDF", notes: "Problem → Solution → Price → CTA. Create in Canva for professional look.", steps: ["Open Canva, choose template", "Write headline (problem you solve)", "List 3-4 key benefits", "Add pricing overview", "Include testimonial if available", "Add clear CTA + contact info"] },
+                            { id: "H04", text: "Proposal template ready", notes: "Google Docs, Notion, or PandaDoc. Professional template you can customise per client.", steps: ["Create template structure", "Add company branding", "Include scope section", "Add pricing table", "Include timeline", "Add terms and next steps"] },
+                            { id: "H05", text: "Follow-up email sequences written", notes: "Day 1, Day 3, Day 7 templates. Persistent but not annoying.", steps: ["Write Day 1: Thank you + recap", "Write Day 3: Add value/insight", "Write Day 7: Last chance + alternative", "Add personalisation tokens", "Set up in email tool or CRM"] }
                         ]
                     },
                     {
                         name: "Digital Presence",
                         items: [
-                            { id: "H06", text: "Website live at arcagency.org" },
-                            { id: "H07", text: "Website: Home page with hero + services" },
-                            { id: "H08", text: "Website: Calendar booking embedded" },
-                            { id: "H09", text: "Website: Demo videos embedded" },
-                            { id: "H10", text: "Website: Mobile-optimised" },
-                            { id: "H11", text: "LinkedIn profile optimised for AI services" }
+                            { id: "H06", text: "Website live at arcagency.org", notes: "Carrd recommended (simple, fast). Or use your existing Ark AI Solutions site.", steps: ["Choose platform (Carrd/existing site)", "Purchase/connect domain", "Set up hosting", "Configure SSL certificate", "Test all pages load"] },
+                            { id: "H07", text: "Website: Home page with hero + services", notes: "Clear value proposition above the fold. Visitor should know what you do in 5 seconds.", steps: ["Write compelling headline", "Add subheadline with target customer", "List 3-4 main services", "Add social proof if available", "Include clear CTA button"] },
+                            { id: "H08", text: "Website: Calendar booking embedded", notes: "One click to book a call. Remove all friction from the booking process.", steps: ["Get embed code from Cal.com/Calendly", "Add to website", "Test booking flow", "Ensure mobile friendly", "Add to multiple pages"] },
+                            { id: "H09", text: "Website: Demo videos embedded", notes: "Show, don't tell. Let prospects see the AI in action before they book.", steps: ["Upload videos to YouTube/Loom", "Get embed codes", "Add to relevant pages", "Ensure autoplay is OFF", "Add captions if possible"] },
+                            { id: "H10", text: "Website: Mobile-optimised", notes: "Test on actual phone. 60%+ of visitors will be on mobile.", steps: ["Test on iPhone and Android", "Check text is readable", "Verify buttons are tappable", "Test booking flow on mobile", "Fix any layout issues"] },
+                            { id: "H11", text: "LinkedIn profile optimised for AI services", notes: "Headline, banner, about section. Your profile IS your landing page on LinkedIn.", steps: ["Update headline with value prop", "Create custom banner image", "Rewrite About section", "Add featured section with demos", "Get recommendations if possible"] }
                         ]
                     },
                     {
                         name: "Payments & Admin",
                         items: [
-                            { id: "H12", text: "Invoicing system set up" },
-                            { id: "H13", text: "Professional email signature" }
+                            { id: "H12", text: "Invoicing system set up", notes: "Stripe or PayPal. Professional invoices build trust.", steps: ["Create Stripe/PayPal business account", "Add company details", "Create invoice template", "Set up payment links", "Test payment flow"] },
+                            { id: "H13", text: "Professional email signature", notes: "Name, title, website, booking link. Every email is a marketing opportunity.", steps: ["Design signature (use WiseStamp or similar)", "Add name and title", "Include phone number", "Add website link", "Add booking link CTA"] }
                         ]
                     }
                 ]
@@ -404,34 +440,34 @@
                     {
                         name: "Technical Knowledge",
                         items: [
-                            { id: "M01", text: "Lead reactivation concept understood" },
-                            { id: "M02", text: "2-3 case studies/examples ready to reference" },
-                            { id: "M03", text: "Basic understanding of CRM integrations" }
+                            { id: "M01", text: "Lead reactivation concept understood", notes: "Can explain it and pitch ROI - you don't need to build it yet, just sell it.", steps: ["Understand what lead reactivation is", "Learn typical conversion rates", "Calculate ROI for prospects", "Prepare 2-3 use case examples", "Practice explaining in 60 seconds"] },
+                            { id: "M02", text: "2-3 case studies/examples ready to reference", notes: "'Here's what this did for a similar business...' - even if hypothetical or from others.", steps: ["Find 2-3 relevant case studies", "Note key metrics and outcomes", "Adapt to your target industries", "Practice telling the stories", "Create visual if possible"] },
+                            { id: "M03", text: "Basic understanding of CRM integrations", notes: "HubSpot, Pipedrive, GoHighLevel. Know what's possible even if you can't build it yet.", steps: ["Research common CRM platforms", "Understand API basics", "Know what data can sync", "Learn about Zapier/Make integrations", "Be able to discuss possibilities"] }
                         ]
                     },
                     {
                         name: "Sales Process",
                         items: [
-                            { id: "M04", text: "Demo call structure/flow documented" },
-                            { id: "M05", text: "Pipeline tracking system" },
-                            { id: "M06", text: "Closing techniques reviewed" }
+                            { id: "M04", text: "Demo call structure/flow documented", notes: "Intro → Discovery → Demo → Objections → Close. Have a repeatable process.", steps: ["Write intro script (2 min)", "Prepare discovery questions", "Plan demo flow", "Prepare objection responses", "Write closing script", "Practice full flow"] },
+                            { id: "M05", text: "Pipeline tracking system", notes: "Spreadsheet or simple CRM. Track every prospect and their stage.", steps: ["Choose tool (spreadsheet/CRM)", "Define pipeline stages", "Add all current prospects", "Set follow-up reminders", "Review weekly"] },
+                            { id: "M06", text: "Closing techniques reviewed", notes: "Review Jack's Closing module. Know how to ask for the business.", steps: ["Review closing techniques", "Practice assumptive close", "Learn to handle 'I need to think'", "Prepare urgency tactics", "Practice with roleplay"] }
                         ]
                     },
                     {
                         name: "Website Extras",
                         items: [
-                            { id: "M07", text: "Website: About page" },
-                            { id: "M08", text: "Website: Contact page" },
-                            { id: "M09", text: "Own chatbot on your website" }
+                            { id: "M07", text: "Website: About page", notes: "Your story, credibility, HR background. People buy from people they trust.", steps: ["Write your professional story", "Highlight relevant experience", "Add professional photo", "Include company mission", "Add any credentials/certifications"] },
+                            { id: "M08", text: "Website: Contact page", notes: "Multiple ways to reach you - email, phone, booking link, contact form.", steps: ["Add contact form", "Include email address", "Add phone number", "Embed booking calendar", "Add physical address if applicable"] },
+                            { id: "M09", text: "Own chatbot on your website", notes: "Eat your own cooking. Show prospects your AI works by using it yourself.", steps: ["Choose chatbot platform", "Configure for your site", "Train on your FAQs", "Add lead capture", "Test thoroughly"] }
                         ]
                     },
                     {
                         name: "Legal & Compliance",
                         items: [
-                            { id: "M10", text: "Privacy Policy on website" },
-                            { id: "M11", text: "Terms of Service on website" },
-                            { id: "M12", text: "ICO Data Protection registration" },
-                            { id: "M13", text: "Cookie consent on website" }
+                            { id: "M10", text: "Privacy Policy on website", notes: "Template generator is fine. Required for GDPR compliance.", steps: ["Use privacy policy generator", "Customise for your business", "Add to website footer", "Link from signup forms", "Review annually"] },
+                            { id: "M11", text: "Terms of Service on website", notes: "Template generator is fine. Protects you legally.", steps: ["Use ToS generator", "Customise for your services", "Add to website footer", "Reference in contracts", "Review annually"] },
+                            { id: "M12", text: "ICO Data Protection registration", notes: "£40/year - required for UK businesses processing personal data.", steps: ["Go to ico.org.uk", "Complete registration", "Pay £40 fee", "Display registration number", "Set renewal reminder"] },
+                            { id: "M13", text: "Cookie consent on website", notes: "Simple banner is fine. Required for GDPR if using analytics/tracking.", steps: ["Choose cookie consent tool", "Configure cookie categories", "Add banner to website", "Ensure opt-out works", "Document for compliance"] }
                         ]
                     }
                 ]
@@ -446,34 +482,34 @@
                     {
                         name: "Extended Technical",
                         items: [
-                            { id: "L01", text: "Second voice AI demo (industry-specific)" },
-                            { id: "L02", text: "n8n/Make automation workflows built" },
-                            { id: "L03", text: "CRM automation (lead -> AI qualifies -> CRM)" },
-                            { id: "L04", text: "A2P SMS registration (Twilio/MessageBird)" }
+                            { id: "L01", text: "Second voice AI demo (industry-specific)", notes: "E.g., recruitment screening agent. Build when you have capacity.", steps: ["Choose industry focus", "Design specific use case", "Build and test", "Create demo video", "Add to portfolio"] },
+                            { id: "L02", text: "n8n/Make automation workflows built", notes: "Build when client needs it. Don't over-prepare.", steps: ["Learn n8n/Make basics", "Build sample workflows", "Document for reuse", "Test thoroughly", "Price appropriately"] },
+                            { id: "L03", text: "CRM automation (lead -> AI qualifies -> CRM)", notes: "Nice demo, not essential for selling. Build when needed.", steps: ["Map the workflow", "Set up CRM integration", "Configure AI qualification", "Test end-to-end", "Document process"] },
+                            { id: "L04", text: "A2P SMS registration (Twilio/MessageBird)", notes: "Only when doing lead reactivation. Complex process.", steps: ["Research A2P requirements", "Prepare business documentation", "Submit registration", "Wait for approval (weeks)", "Configure messaging"] }
                         ]
                     },
                     {
                         name: "Content & Marketing",
                         items: [
-                            { id: "L05", text: "Website: Case studies page" },
-                            { id: "L06", text: "Content strategy planned" },
-                            { id: "L07", text: "Social proof/testimonials" },
-                            { id: "L08", text: "Referral system designed" }
+                            { id: "L05", text: "Website: Case studies page", notes: "After you have clients. Real results beat hypotheticals.", steps: ["Complete first client project", "Gather metrics and feedback", "Write case study", "Get client approval", "Add to website"] },
+                            { id: "L06", text: "Content strategy planned", notes: "Jack's Content Hacks module. Focus on selling first.", steps: ["Review Content Hacks module", "Identify content themes", "Plan posting schedule", "Create content calendar", "Batch create content"] },
+                            { id: "L07", text: "Social proof/testimonials", notes: "After you have clients. Ask for testimonials after successful delivery.", steps: ["Deliver great results", "Ask for testimonial", "Get written approval", "Add to website", "Use in sales materials"] },
+                            { id: "L08", text: "Referral system designed", notes: "Future scaling. Focus on direct sales first.", steps: ["Design referral incentive", "Create referral tracking", "Build referral page", "Promote to happy clients", "Track and optimise"] }
                         ]
                     },
                     {
                         name: "Advanced Sales",
                         items: [
-                            { id: "L09", text: "Email warm-up for cold outreach" },
-                            { id: "L10", text: "Sales Navigator subscription" }
+                            { id: "L09", text: "Email warm-up for cold outreach", notes: "Only if deliverability is an issue. Start sending first.", steps: ["Monitor email deliverability", "If issues, use warm-up tool", "Gradually increase volume", "Monitor bounce rates", "Adjust as needed"] },
+                            { id: "L10", text: "Sales Navigator subscription", notes: "Free trial is fine for now. Upgrade when ROI is clear.", steps: ["Start with free trial", "Learn advanced search", "Build prospect lists", "Track InMail response rates", "Decide on paid subscription"] }
                         ]
                     },
                     {
                         name: "Operations (Post-First-Client)",
                         items: [
-                            { id: "L11", text: "Client onboarding checklist" },
-                            { id: "L12", text: "Delivery process documented" },
-                            { id: "L13", text: "White-label partner identified" }
+                            { id: "L11", text: "Client onboarding checklist", notes: "Build after first deal. Learn what's needed from experience.", steps: ["Document first client onboarding", "Note what worked/didn't", "Create checklist template", "Add to project management tool", "Refine with each client"] },
+                            { id: "L12", text: "Delivery process documented", notes: "Build after first deal. Document as you go.", steps: ["Complete first project", "Document each step", "Note time per task", "Create SOP template", "Refine over time"] },
+                            { id: "L13", text: "White-label partner identified", notes: "For builds you can't do yourself. Network with other AI agencies.", steps: ["Identify skill gaps", "Research potential partners", "Have intro conversations", "Agree on terms", "Test with small project"] }
                         ]
                     }
                 ]
@@ -701,16 +737,38 @@
                         </h4>
                         <div class="space-y-2">
                             ${category.items.map(item => `
-                                <label class="checkbox-item flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                                    <input type="checkbox"
-                                           id="${item.id}"
-                                           class="hidden"
-                                           ${appState.checklist[item.id] ? 'checked' : ''}
-                                           onchange="handleCheckboxChange('${item.id}', this.checked)">
-                                    <span class="checkbox-custom"></span>
-                                    <span class="checkbox-label text-gray-200 text-sm flex-1">${item.text}</span>
-                                    <span class="text-gray-600 text-xs font-mono">${item.id}</span>
-                                </label>
+                                <div class="checkbox-wrapper rounded-lg bg-ark-input/50 overflow-hidden" data-item-id="${item.id}">
+                                    <div class="flex items-center gap-3 p-3 cursor-pointer hover:bg-white/5 transition-colors" onclick="toggleItemDetails('${item.id}')">
+                                        <label class="checkbox-item flex items-center gap-3 flex-1" onclick="event.stopPropagation()">
+                                            <input type="checkbox"
+                                                   id="${item.id}"
+                                                   class="hidden"
+                                                   ${appState.checklist[item.id] ? 'checked' : ''}
+                                                   onchange="handleCheckboxChange('${item.id}', this.checked)">
+                                            <span class="checkbox-custom"></span>
+                                            <span class="checkbox-label text-gray-200 text-sm flex-1">${item.text}</span>
+                                        </label>
+                                        <span class="text-gray-600 text-xs font-mono">${item.id}</span>
+                                        <svg class="expand-icon w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    </div>
+                                    <div class="item-details bg-ark-dark/50 border-t border-gray-800">
+                                        <div class="mb-3">
+                                            <p class="text-gray-300 text-sm leading-relaxed">${item.notes || ''}</p>
+                                        </div>
+                                        ${item.steps && item.steps.length > 0 ? `
+                                            <div>
+                                                <p class="text-xs font-semibold text-ark-primary mb-2 uppercase tracking-wide">Steps to Complete:</p>
+                                                <div class="space-y-2">
+                                                    ${item.steps.map(step => `
+                                                        <div class="step-item text-gray-400 text-sm">${step}</div>
+                                                    `).join('')}
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
                             `).join('')}
                         </div>
                     `;
@@ -767,6 +825,13 @@
 
         function toggleSection(section) {
             section.classList.toggle('expanded');
+        }
+
+        function toggleItemDetails(itemId) {
+            const wrapper = document.querySelector(`[data-item-id="${itemId}"]`);
+            if (wrapper) {
+                wrapper.classList.toggle('expanded');
+            }
         }
 
         function handleCheckboxChange(itemId, checked) {

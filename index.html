@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ark AI Solutions - Business Launch Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ark-primary': '#cc147f',
+                        'ark-secondary': '#ff4da6',
+                        'ark-success': '#39b54a',
+                        'ark-critical': '#ef4444',
+                        'ark-high': '#f97316',
+                        'ark-medium': '#eab308',
+                        'ark-low': '#39b54a',
+                        'ark-dark': '#151F24',
+                        'ark-card': '#1a2730',
+                        'ark-input': '#0f1419',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #151F24 0%, #0f1419 50%, #151F24 100%);
+            min-height: 100vh;
+        }
+
+        .progress-ring__progress {
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .checklist-section.expanded .section-content {
+            max-height: 3000px;
+        }
+
+        .checklist-section.expanded .chevron-icon {
+            transform: rotate(180deg);
+        }
+
+        .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .checkbox-custom {
+            position: relative;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #6b7280;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .checkbox-item input:checked + .checkbox-custom {
+            background-color: #cc147f;
+            border-color: #cc147f;
+        }
+
+        .checkbox-item input:checked + .checkbox-custom::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-item input:checked ~ .checkbox-label {
+            color: #6b7280;
+            text-decoration: line-through;
+        }
+
+        .progress-bar-fill {
+            transition: width 0.5s ease-out;
+        }
+
+        .glass-card {
+            background: rgba(26, 39, 48, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(204, 20, 127, 0.2);
+        }
+
+        .glow-ring {
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .status-badge {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .number-input::-webkit-inner-spin-button,
+        .number-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .number-input {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row items-center justify-between mb-8">
+            <div class="flex items-center gap-4 mb-4 md:mb-0">
+                <svg viewBox="0 0 50 50" class="w-12 h-12 text-ark-primary">
+                    <circle cx="25" cy="25" r="23" stroke="currentColor" stroke-width="2" fill="none"/>
+                    <text x="25" y="32" text-anchor="middle" fill="currentColor" font-size="20" font-weight="bold">A</text>
+                </svg>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-ark-primary to-ark-secondary bg-clip-text text-transparent">
+                        Ark AI Solutions
+                    </h1>
+                    <p class="text-gray-400 text-sm">Business Launch Dashboard</p>
+                </div>
+            </div>
+            <div id="countdown" class="glass-card rounded-xl px-6 py-3 text-center">
+                <div class="flex items-center gap-4">
+                    <div>
+                        <span id="days-count" class="text-3xl font-bold text-ark-primary">--</span>
+                        <span class="text-gray-400 text-sm block">days</span>
+                    </div>
+                    <div class="text-gray-600">:</div>
+                    <div>
+                        <span id="hours-count" class="text-3xl font-bold text-ark-secondary">--</span>
+                        <span class="text-gray-400 text-sm block">hours</span>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Until January 5th, 2025</p>
+            </div>
+        </header>
+
+        <!-- Overall Status Section -->
+        <section class="glass-card rounded-2xl p-6 md:p-8 mb-8">
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+
+                <!-- Main Progress Ring -->
+                <div class="flex flex-col items-center">
+                    <div class="relative">
+                        <svg class="w-48 h-48 transform -rotate-90" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="85" stroke="#1a2730" stroke-width="12" fill="none"/>
+                            <circle id="main-progress-ring" cx="100" cy="100" r="85"
+                                    stroke="url(#gradient)" stroke-width="12" fill="none"
+                                    stroke-linecap="round"
+                                    stroke-dasharray="534.07" stroke-dashoffset="534.07"
+                                    class="progress-ring__progress glow-ring"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#cc147f"/>
+                                    <stop offset="100%" stop-color="#ff4da6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span id="overall-percentage" class="text-5xl font-bold text-white">0%</span>
+                            <span class="text-gray-400 text-sm">Complete</span>
+                        </div>
+                    </div>
+                    <div id="launch-status" class="mt-4 px-6 py-2 rounded-full font-semibold text-sm status-badge">
+                        NOT READY
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="flex-1 w-full">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-300">Launch Readiness by Priority</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <!-- Critical -->
+                        <div class="bg-ark-input rounded-xl p-4 text-center">
+                            <svg class="w-20 h-20 mx-auto transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
+                                <circle id="critical-ring" cx="50" cy="50" r="40"
+                                        stroke="#ef4444" stroke-width="8" fill="none"
+                                        stroke-linecap="round"
+                                        stroke-dasharray="251.33" stroke-dashoffset="251.33"
+                                        class="progress-ring__progress"/>
+                            </svg>
+                            <div class="-mt-14 relative z-10">
+                                <span id="critical-percent" class="text-xl font-bold text-ark-critical">0%</span>
+                            </div>
+                            <div class="mt-2">
+                                <span class="inline-block px-2 py-1 bg-ark-critical/20 text-ark-critical text-xs font-semibold rounded">CRITICAL</span>
+                                <p id="critical-count" class="text-gray-400 text-xs mt-1">0/13</p>
+                            </div>
+                        </div>
+
+                        <!-- High -->
+                        <div class="bg-ark-input rounded-xl p-4 text-center">
+                            <svg class="w-20 h-20 mx-auto transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
+                                <circle id="high-ring" cx="50" cy="50" r="40"
+                                        stroke="#f97316" stroke-width="8" fill="none"
+                                        stroke-linecap="round"
+                                        stroke-dasharray="251.33" stroke-dashoffset="251.33"
+                                        class="progress-ring__progress"/>
+                            </svg>
+                            <div class="-mt-14 relative z-10">
+                                <span id="high-percent" class="text-xl font-bold text-ark-high">0%</span>
+                            </div>
+                            <div class="mt-2">
+                                <span class="inline-block px-2 py-1 bg-ark-high/20 text-ark-high text-xs font-semibold rounded">HIGH</span>
+                                <p id="high-count" class="text-gray-400 text-xs mt-1">0/13</p>
+                            </div>
+                        </div>
+
+                        <!-- Medium -->
+                        <div class="bg-ark-input rounded-xl p-4 text-center">
+                            <svg class="w-20 h-20 mx-auto transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
+                                <circle id="medium-ring" cx="50" cy="50" r="40"
+                                        stroke="#eab308" stroke-width="8" fill="none"
+                                        stroke-linecap="round"
+                                        stroke-dasharray="251.33" stroke-dashoffset="251.33"
+                                        class="progress-ring__progress"/>
+                            </svg>
+                            <div class="-mt-14 relative z-10">
+                                <span id="medium-percent" class="text-xl font-bold text-ark-medium">0%</span>
+                            </div>
+                            <div class="mt-2">
+                                <span class="inline-block px-2 py-1 bg-ark-medium/20 text-ark-medium text-xs font-semibold rounded">MEDIUM</span>
+                                <p id="medium-count" class="text-gray-400 text-xs mt-1">0/13</p>
+                            </div>
+                        </div>
+
+                        <!-- Low -->
+                        <div class="bg-ark-input rounded-xl p-4 text-center">
+                            <svg class="w-20 h-20 mx-auto transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" stroke="#2d3748" stroke-width="8" fill="none"/>
+                                <circle id="low-ring" cx="50" cy="50" r="40"
+                                        stroke="#39b54a" stroke-width="8" fill="none"
+                                        stroke-linecap="round"
+                                        stroke-dasharray="251.33" stroke-dashoffset="251.33"
+                                        class="progress-ring__progress"/>
+                            </svg>
+                            <div class="-mt-14 relative z-10">
+                                <span id="low-percent" class="text-xl font-bold text-ark-low">0%</span>
+                            </div>
+                            <div class="mt-2">
+                                <span class="inline-block px-2 py-1 bg-ark-low/20 text-ark-low text-xs font-semibold rounded">LOW</span>
+                                <p id="low-count" class="text-gray-400 text-xs mt-1">0/13</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex items-center justify-between text-sm">
+                        <span class="text-gray-400"><span id="total-complete" class="text-white font-semibold">0</span> of 52 items complete</span>
+                        <span id="last-saved" class="text-gray-500 text-xs"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklist Sections -->
+        <section class="mb-8">
+            <h2 class="text-xl font-bold mb-4 text-gray-200">Launch Checklist</h2>
+            <div id="checklist-container" class="space-y-4">
+                <!-- Sections will be rendered by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Activity Tracker -->
+        <section class="glass-card rounded-2xl p-6 md:p-8 mb-8">
+            <h2 class="text-xl font-bold mb-6 text-gray-200">Activity Tracker</h2>
+            <p class="text-gray-400 text-sm mb-6">Track your outreach progress toward January 5th targets</p>
+
+            <div id="activity-container" class="grid md:grid-cols-2 gap-6">
+                <!-- Activities will be rendered by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="flex flex-col md:flex-row items-center justify-between text-gray-500 text-sm py-4 border-t border-gray-800">
+            <p>Ark AI Solutions Launch Dashboard</p>
+            <button onclick="resetDashboard()" class="mt-4 md:mt-0 px-4 py-2 bg-red-900/30 hover:bg-red-900/50 text-red-400 rounded-lg transition-colors text-sm">
+                Reset All Progress
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        // ============================================
+        // DATA DEFINITIONS
+        // ============================================
+
+        const checklistData = {
+            critical: {
+                name: "CRITICAL",
+                color: "#ef4444",
+                bgClass: "bg-ark-critical/20",
+                textClass: "text-ark-critical",
+                borderClass: "border-ark-critical",
+                categories: [
+                    {
+                        name: "Sales Infrastructure",
+                        items: [
+                            { id: "C01", text: "Cold call script written & practised" },
+                            { id: "C02", text: "Cold email templates (3 industry variations)" },
+                            { id: "C03", text: "LinkedIn connection request template" },
+                            { id: "C04", text: "Prospect list built (110+ contacts minimum)" },
+                            { id: "C05", text: "Offer statement locked (one sentence)" },
+                            { id: "C06", text: "Pricing locked in" },
+                            { id: "C07", text: "Objection responses mapped (top 5)" }
+                        ]
+                    },
+                    {
+                        name: "Technical Demos",
+                        items: [
+                            { id: "C08", text: "ONE working voice AI demo" },
+                            { id: "C09", text: "Voice demo test phone number active" },
+                            { id: "C10", text: "ONE working chatbot demo" }
+                        ]
+                    },
+                    {
+                        name: "Business Infrastructure",
+                        items: [
+                            { id: "C11", text: "Professional email working" },
+                            { id: "C12", text: "Calendar booking system live" },
+                            { id: "C13", text: "Service agreement/contract template" }
+                        ]
+                    }
+                ]
+            },
+            high: {
+                name: "HIGH",
+                color: "#f97316",
+                bgClass: "bg-ark-high/20",
+                textClass: "text-ark-high",
+                borderClass: "border-ark-high",
+                categories: [
+                    {
+                        name: "Sales Materials",
+                        items: [
+                            { id: "H01", text: "Demo video - Voice AI (Loom, <3 mins)" },
+                            { id: "H02", text: "Demo video - Chatbot (Loom, <2 mins)" },
+                            { id: "H03", text: "Service one-pager PDF" },
+                            { id: "H04", text: "Proposal template ready" },
+                            { id: "H05", text: "Follow-up email sequences written" }
+                        ]
+                    },
+                    {
+                        name: "Digital Presence",
+                        items: [
+                            { id: "H06", text: "Website live at arcagency.org" },
+                            { id: "H07", text: "Website: Home page with hero + services" },
+                            { id: "H08", text: "Website: Calendar booking embedded" },
+                            { id: "H09", text: "Website: Demo videos embedded" },
+                            { id: "H10", text: "Website: Mobile-optimised" },
+                            { id: "H11", text: "LinkedIn profile optimised for AI services" }
+                        ]
+                    },
+                    {
+                        name: "Payments & Admin",
+                        items: [
+                            { id: "H12", text: "Invoicing system set up" },
+                            { id: "H13", text: "Professional email signature" }
+                        ]
+                    }
+                ]
+            },
+            medium: {
+                name: "MEDIUM",
+                color: "#eab308",
+                bgClass: "bg-ark-medium/20",
+                textClass: "text-ark-medium",
+                borderClass: "border-ark-medium",
+                categories: [
+                    {
+                        name: "Technical Knowledge",
+                        items: [
+                            { id: "M01", text: "Lead reactivation concept understood" },
+                            { id: "M02", text: "2-3 case studies/examples ready to reference" },
+                            { id: "M03", text: "Basic understanding of CRM integrations" }
+                        ]
+                    },
+                    {
+                        name: "Sales Process",
+                        items: [
+                            { id: "M04", text: "Demo call structure/flow documented" },
+                            { id: "M05", text: "Pipeline tracking system" },
+                            { id: "M06", text: "Closing techniques reviewed" }
+                        ]
+                    },
+                    {
+                        name: "Website Extras",
+                        items: [
+                            { id: "M07", text: "Website: About page" },
+                            { id: "M08", text: "Website: Contact page" },
+                            { id: "M09", text: "Own chatbot on your website" }
+                        ]
+                    },
+                    {
+                        name: "Legal & Compliance",
+                        items: [
+                            { id: "M10", text: "Privacy Policy on website" },
+                            { id: "M11", text: "Terms of Service on website" },
+                            { id: "M12", text: "ICO Data Protection registration" },
+                            { id: "M13", text: "Cookie consent on website" }
+                        ]
+                    }
+                ]
+            },
+            low: {
+                name: "LOW",
+                color: "#39b54a",
+                bgClass: "bg-ark-low/20",
+                textClass: "text-ark-low",
+                borderClass: "border-ark-low",
+                categories: [
+                    {
+                        name: "Extended Technical",
+                        items: [
+                            { id: "L01", text: "Second voice AI demo (industry-specific)" },
+                            { id: "L02", text: "n8n/Make automation workflows built" },
+                            { id: "L03", text: "CRM automation (lead -> AI qualifies -> CRM)" },
+                            { id: "L04", text: "A2P SMS registration (Twilio/MessageBird)" }
+                        ]
+                    },
+                    {
+                        name: "Content & Marketing",
+                        items: [
+                            { id: "L05", text: "Website: Case studies page" },
+                            { id: "L06", text: "Content strategy planned" },
+                            { id: "L07", text: "Social proof/testimonials" },
+                            { id: "L08", text: "Referral system designed" }
+                        ]
+                    },
+                    {
+                        name: "Advanced Sales",
+                        items: [
+                            { id: "L09", text: "Email warm-up for cold outreach" },
+                            { id: "L10", text: "Sales Navigator subscription" }
+                        ]
+                    },
+                    {
+                        name: "Operations (Post-First-Client)",
+                        items: [
+                            { id: "L11", text: "Client onboarding checklist" },
+                            { id: "L12", text: "Delivery process documented" },
+                            { id: "L13", text: "White-label partner identified" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        const activityTargets = {
+            linkedinConnections: { label: "LinkedIn Connection Requests", target: 150, icon: "LI" },
+            coldEmails: { label: "Cold Emails Sent", target: 100, icon: "EM" },
+            coldCalls: { label: "Cold Calls Made", target: 80, icon: "PH" },
+            conversations: { label: "Conversations Started", target: 20, icon: "CH" },
+            demoCalls: { label: "Demo Calls Completed", target: 7, icon: "DM" },
+            proposalsSent: { label: "Proposals Sent", target: 4, icon: "PR" },
+            dealsClosed: { label: "Deals Closed", target: 1, icon: "CL" }
+        };
+
+        // ============================================
+        // STATE MANAGEMENT
+        // ============================================
+
+        const STORAGE_KEY = 'ark-launch-dashboard';
+
+        function getDefaultState() {
+            return {
+                checklist: {},
+                activities: {
+                    linkedinConnections: 0,
+                    coldEmails: 0,
+                    coldCalls: 0,
+                    conversations: 0,
+                    demoCalls: 0,
+                    proposalsSent: 0,
+                    dealsClosed: 0
+                },
+                lastSaved: null
+            };
+        }
+
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                return saved ? JSON.parse(saved) : getDefaultState();
+            } catch (e) {
+                console.error('Failed to load state:', e);
+                return getDefaultState();
+            }
+        }
+
+        function saveState(state) {
+            try {
+                state.lastSaved = new Date().toISOString();
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                updateLastSaved(state.lastSaved);
+            } catch (e) {
+                console.error('Failed to save state:', e);
+            }
+        }
+
+        let appState = loadState();
+
+        // ============================================
+        // COUNTDOWN TIMER
+        // ============================================
+
+        function updateCountdown() {
+            const launchDate = new Date('2025-01-05T00:00:00');
+            const now = new Date();
+            const diffMs = launchDate - now;
+
+            if (diffMs <= 0) {
+                document.getElementById('days-count').textContent = '0';
+                document.getElementById('hours-count').textContent = '0';
+                return;
+            }
+
+            const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+            document.getElementById('days-count').textContent = days;
+            document.getElementById('hours-count').textContent = hours;
+        }
+
+        // ============================================
+        // PROGRESS CALCULATIONS
+        // ============================================
+
+        function calculateTierProgress(tierKey) {
+            const tier = checklistData[tierKey];
+            let total = 0;
+            let completed = 0;
+
+            tier.categories.forEach(cat => {
+                cat.items.forEach(item => {
+                    total++;
+                    if (appState.checklist[item.id]) completed++;
+                });
+            });
+
+            return { completed, total, percentage: total > 0 ? Math.round((completed / total) * 100) : 0 };
+        }
+
+        function calculateOverallProgress() {
+            let total = 0;
+            let completed = 0;
+
+            Object.keys(checklistData).forEach(tierKey => {
+                const progress = calculateTierProgress(tierKey);
+                total += progress.total;
+                completed += progress.completed;
+            });
+
+            return { completed, total, percentage: total > 0 ? Math.round((completed / total) * 100) : 0 };
+        }
+
+        function getLaunchStatus() {
+            const critical = calculateTierProgress('critical');
+            const high = calculateTierProgress('high');
+
+            if (critical.percentage === 100 && high.percentage >= 80) {
+                return { text: 'READY TO LAUNCH', bgClass: 'bg-ark-success', textClass: 'text-white' };
+            } else if (critical.percentage === 100 && high.percentage >= 50) {
+                return { text: 'ALMOST READY', bgClass: 'bg-ark-high', textClass: 'text-white' };
+            } else {
+                return { text: 'NOT READY', bgClass: 'bg-ark-critical', textClass: 'text-white' };
+            }
+        }
+
+        // ============================================
+        // UI UPDATES
+        // ============================================
+
+        function updateProgressRing(elementId, percentage, circumference = 251.33) {
+            const ring = document.getElementById(elementId);
+            if (ring) {
+                const offset = circumference - (percentage / 100) * circumference;
+                ring.style.strokeDashoffset = offset;
+            }
+        }
+
+        function updateAllProgress() {
+            // Update tier progress
+            const tiers = ['critical', 'high', 'medium', 'low'];
+            tiers.forEach(tier => {
+                const progress = calculateTierProgress(tier);
+                updateProgressRing(`${tier}-ring`, progress.percentage);
+                document.getElementById(`${tier}-percent`).textContent = `${progress.percentage}%`;
+                document.getElementById(`${tier}-count`).textContent = `${progress.completed}/${progress.total}`;
+            });
+
+            // Update overall progress
+            const overall = calculateOverallProgress();
+            updateProgressRing('main-progress-ring', overall.percentage, 534.07);
+            document.getElementById('overall-percentage').textContent = `${overall.percentage}%`;
+            document.getElementById('total-complete').textContent = overall.completed;
+
+            // Update launch status
+            const status = getLaunchStatus();
+            const statusEl = document.getElementById('launch-status');
+            statusEl.textContent = status.text;
+            statusEl.className = `mt-4 px-6 py-2 rounded-full font-semibold text-sm status-badge ${status.bgClass} ${status.textClass}`;
+
+            // Update section headers
+            tiers.forEach(tier => {
+                const progress = calculateTierProgress(tier);
+                const headerCount = document.querySelector(`[data-tier="${tier}"] .section-progress`);
+                if (headerCount) {
+                    headerCount.textContent = `${progress.completed}/${progress.total}`;
+                }
+            });
+        }
+
+        function updateLastSaved(timestamp) {
+            const el = document.getElementById('last-saved');
+            if (timestamp) {
+                const date = new Date(timestamp);
+                el.textContent = `Last saved: ${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+            }
+        }
+
+        // ============================================
+        // RENDER FUNCTIONS
+        // ============================================
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            container.innerHTML = '';
+
+            Object.entries(checklistData).forEach(([tierKey, tier]) => {
+                const progress = calculateTierProgress(tierKey);
+
+                const section = document.createElement('div');
+                section.className = 'checklist-section glass-card rounded-xl overflow-hidden';
+                section.dataset.tier = tierKey;
+
+                // Create header
+                const header = document.createElement('button');
+                header.className = 'section-header w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors';
+                header.onclick = () => toggleSection(section);
+                header.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="inline-block px-3 py-1 ${tier.bgClass} ${tier.textClass} text-xs font-bold rounded">${tier.name}</span>
+                        <span class="text-gray-300 text-sm hidden md:inline">${tier.categories.map(c => c.name).join(', ')}</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="section-progress text-gray-400 font-medium">${progress.completed}/${progress.total}</span>
+                        <svg class="chevron-icon w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                `;
+
+                // Create content
+                const content = document.createElement('div');
+                content.className = 'section-content';
+
+                const innerContent = document.createElement('div');
+                innerContent.className = 'p-4 pt-0 space-y-6';
+
+                tier.categories.forEach(category => {
+                    const catDiv = document.createElement('div');
+                    catDiv.innerHTML = `
+                        <h4 class="text-sm font-semibold text-gray-400 mb-3 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full" style="background-color: ${tier.color}"></span>
+                            ${category.name}
+                        </h4>
+                        <div class="space-y-2">
+                            ${category.items.map(item => `
+                                <label class="checkbox-item flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                                    <input type="checkbox"
+                                           id="${item.id}"
+                                           class="hidden"
+                                           ${appState.checklist[item.id] ? 'checked' : ''}
+                                           onchange="handleCheckboxChange('${item.id}', this.checked)">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="checkbox-label text-gray-200 text-sm flex-1">${item.text}</span>
+                                    <span class="text-gray-600 text-xs font-mono">${item.id}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                    innerContent.appendChild(catDiv);
+                });
+
+                content.appendChild(innerContent);
+                section.appendChild(header);
+                section.appendChild(content);
+                container.appendChild(section);
+            });
+        }
+
+        function renderActivities() {
+            const container = document.getElementById('activity-container');
+            container.innerHTML = '';
+
+            Object.entries(activityTargets).forEach(([key, activity]) => {
+                const current = appState.activities[key] || 0;
+                const percentage = Math.min(100, Math.round((current / activity.target) * 100));
+
+                const div = document.createElement('div');
+                div.className = 'bg-ark-input rounded-xl p-4';
+                div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-gray-300 text-sm font-medium">${activity.label}</span>
+                        <div class="flex items-center gap-2">
+                            <input type="number"
+                                   id="activity-${key}"
+                                   class="number-input w-16 bg-ark-dark border border-gray-700 rounded px-2 py-1 text-white text-center text-sm focus:border-ark-primary focus:outline-none"
+                                   value="${current}"
+                                   min="0"
+                                   max="999"
+                                   onchange="handleActivityChange('${key}', this.value)">
+                            <span class="text-gray-500 text-sm">/ ${activity.target}</span>
+                        </div>
+                    </div>
+                    <div class="relative h-3 bg-ark-dark rounded-full overflow-hidden">
+                        <div class="progress-bar-fill absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-ark-primary to-ark-secondary"
+                             style="width: ${percentage}%"></div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <span class="text-xs ${percentage >= 100 ? 'text-ark-success' : 'text-gray-500'}">${percentage}% complete</span>
+                        <span class="text-xs text-gray-600">${activity.target - current > 0 ? `${activity.target - current} to go` : 'Target reached!'}</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // ============================================
+        // EVENT HANDLERS
+        // ============================================
+
+        function toggleSection(section) {
+            section.classList.toggle('expanded');
+        }
+
+        function handleCheckboxChange(itemId, checked) {
+            appState.checklist[itemId] = checked;
+            saveState(appState);
+            updateAllProgress();
+        }
+
+        function handleActivityChange(key, value) {
+            const numValue = Math.max(0, parseInt(value) || 0);
+            appState.activities[key] = numValue;
+            document.getElementById(`activity-${key}`).value = numValue;
+            saveState(appState);
+            renderActivities();
+        }
+
+        function resetDashboard() {
+            if (confirm('Are you sure you want to reset ALL progress? This cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                appState = getDefaultState();
+                renderChecklist();
+                renderActivities();
+                updateAllProgress();
+                updateLastSaved(null);
+            }
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        function init() {
+            updateCountdown();
+            setInterval(updateCountdown, 60000);
+
+            renderChecklist();
+            renderActivities();
+            updateAllProgress();
+
+            if (appState.lastSaved) {
+                updateLastSaved(appState.lastSaved);
+            }
+
+            // Expand critical section by default
+            const criticalSection = document.querySelector('[data-tier="critical"]');
+            if (criticalSection) {
+                criticalSection.classList.add('expanded');
+            }
+        }
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
